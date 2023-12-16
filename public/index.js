@@ -66,7 +66,22 @@ async function main() {
         }
     })
 
+    //Mockdata stocks variable
+    const mockStocks = Object.values(mockData)
+    //Average stock price function
     
+    //Average Price Chart using mockData.js
+    let mockResponse = await fetch('./mockData.js')
+    console.log(mockResponse)
+
+    new Chart(averagePriceChartCanvas.getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: mockStocks.map(stock => stock.meta.symbol),
+            data: mockStocks.map(stock => getAveragePrice(stock)),
+            backgroundColor: mockStocks.map(stock => getColor(stock.meta.symbol))
+        }
+    })
 
 }
 
