@@ -46,11 +46,27 @@ async function main() {
         }
     })
 
+
+    //Highest Price function
+    function getHighestPrice(stock){
+        return Math.max(...stock.values.map(value => parseFloat(value.high)))
+    }
+    
     //Bar chart for highest price chart
-    new Chart(highestPriceChartCanvas, {
+    new Chart(highestPriceChartCanvas.getContext('2d'), {
         type: 'bar',
-        
+        data: {
+            labels: stocks.map(stock => stock.meta.symbol),
+            datasets: [{
+                label: 'Highest Stock Price',
+                data: stocks.map(stock => getHighestPrice(stock)),
+                backgroundColor: stocks.map(stock => getColor(stock.meta.symbol)),
+                borderColor: stocks.map(stock => getColor(stock.meta.symbol))
+            }]
+        }
     })
+
+    
 
 }
 
